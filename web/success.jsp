@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admninistrator</title>
     </head>
@@ -33,7 +38,8 @@
             if(3==nivel){
             rs2=manejador.executeQuery("SELECT idUser, id, rol FROM users");
             
-            out.println("<table width='70%'>");
+            out.println("<div class=\"container\">");
+            out.println("<table class=\"table table-striped table-bordered table-responsive\">");
             out.println("<thead>");
             out.println("<tr>");
             out.println("<th>Nombre</th>");
@@ -57,6 +63,7 @@
             
             out.println("</tbody>");
             out.println("</table>");
+            out.println("</div>");
             }else{
                 
             }
