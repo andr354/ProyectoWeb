@@ -60,23 +60,24 @@ class LoginBean{
         return 0;
     }
     
-    public int modifyUser(String userName, String password, String rol, int id){
+    public int modifyUser(String userName, String password, int nivel, int id){
         int status = 0;
         String pass2 = "";
         try {
             con = DataSource.getInstance().getConnection();
-            int nivel = 1;
-            if(rol=="ADMIN"){
-                nivel = 3;
-            }else if(rol=="PROFESSOR"){
-                nivel = 2;
+            String rol = "STUDENT";
+            if(nivel==3){
+                rol = "ADMIN";
+            }else if(nivel == 2){
+                rol = "PROFESSOR";
             }
             if(password==""){
                 pst = con.prepareStatement("SELECT Users.password FROM Users WHERE Users.idUser="+id+"");
                 rs = pst.executeQuery("SELECT Users.password FROM Users WHERE Users.idUser="+id+"");
                 pass2 = rs.getString("Users.password");
+                password = pass2;
             }
-            password = pass2;
+            
             String consulta = "update users\n" +
                             "set id='"+userName+"', password='"+password+"', rol='"+rol+"', nivel='"+nivel+"'\n" +
                             "where idUser='"+id+"';";
