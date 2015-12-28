@@ -19,9 +19,10 @@ class LoginBean{
     public LoginBean(){
     }
 
-    public boolean validateUser(String userName, String password){
+    public int validateUser(String userName, String password){
         String nombre = "";
         String pass = "";
+        int id = 0;
         try {
             con = DataSource.getInstance().getConnection();
             String consulta = "Select * from users where id=? and password=?";
@@ -29,7 +30,11 @@ class LoginBean{
             pst.setString(1, userName);
             pst.setString(2, password);
             rs = pst.executeQuery();
-            status = rs.next();   
+            status = rs.next(); 
+            if(status){
+                id = rs.getInt("users.nivel");
+                return(id);
+            }
         } catch (Exception e) {  
             System.out.println(e);  
         } finally {  
@@ -52,7 +57,7 @@ class LoginBean{
                 }  
             }  
         } 
-        return status;
+        return 0;
     }
     
     public int modifyUser(String userName, String password, String rol, int id){

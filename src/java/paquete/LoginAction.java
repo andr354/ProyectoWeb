@@ -34,11 +34,18 @@ public class LoginAction extends ActionSupport implements SessionAware
 	public String execute() {
             LoginBean lb = new LoginBean();
             sessionMap.put("username", username);
-            if(lb.validateUser(username,password)){
-                return "exitoso";
+            int acc = lb.validateUser(username, password);
+            if(acc!=0){
+                sessionMap.put("acc", Integer.toString(acc));
+                if(acc==3){
+                    return "exitoso";
+                }else if(acc==2){
+                    return "professor";
+                }else{
+                    return "student";
+                }
             }else{
                 return "fail";
             }
- 
 	}
     }

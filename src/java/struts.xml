@@ -8,6 +8,8 @@
     <package name="default" extends="struts-default">
         <action name="Login" class="paquete.LoginAction">
             <result name="exitoso">/success.jsp</result>
+            <result name="student">/studentIndex.jsp</result>
+            <result name="professor">/professorIndex.jsp</result>
             <result name="fail">/fail.jsp</result>
 	</action>
         <action name="Add" class="paquete.AddAction">

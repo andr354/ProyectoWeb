@@ -7,8 +7,8 @@
 	<h1>Login</h1>
 <center>
 	<s:form action="/Login">
-            Nombre de usuario: <s:textfield name="username" label="Username" /><br>
-            Contraseña: <s:password name="password" label="Password" />
+            <s:textfield name="username" label="Nombre de usuario" /><br>
+            <s:password name="password" label="Contraseña" />
 		<s:submit />
 	</s:form>
 </center>
