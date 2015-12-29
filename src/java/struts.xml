@@ -20,5 +20,9 @@
             <result name="exitoso">/success.jsp</result>
             <result name="error">/success.jsp</result>
         </action>
+        <action name="Del" class="paquete.DelAction">
+            <result name="exitoso">/success.jsp</result>
+            <result name="error">/success.jsp</result>
+        </action>
     </package>
 </struts>

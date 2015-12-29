@@ -62,7 +62,7 @@
 		name="rol" 
 		value="rol" />
             <br>
-            <s:submit value="Agregar" />
+            <s:submit value="Guardar cambios" />
         </s:form>
             <!--Dice que no pero si jala chido-->
 </center>
