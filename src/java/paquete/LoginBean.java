@@ -72,12 +72,12 @@ class LoginBean{
                 rol = "PROFESSOR";
             }
             if(password==""){
-                pst = con.prepareStatement("SELECT Users.password FROM Users WHERE Users.idUser="+id+"");
-                rs = pst.executeQuery("SELECT Users.password FROM Users WHERE Users.idUser="+id+"");
-                pass2 = rs.getString("Users.password");
+                pst = con.prepareStatement("SELECT users.password FROM users WHERE users.idUser="+id+"");
+                rs = pst.executeQuery("SELECT users.password FROM users WHERE users.idUser="+id+"");
+                pass2 = rs.getString("users.password");
                 password = pass2;
             }
-            
+            System.out.println("ejecutando consulta");
             String consulta = "update users\n" +
                             "set id='"+userName+"', password='"+password+"', rol='"+rol+"', nivel='"+nivel+"'\n" +
                             "where idUser='"+id+"';";

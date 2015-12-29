@@ -6,11 +6,12 @@ import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-public class AddAction extends ActionSupport
+public class ModAction extends ActionSupport
 {
         private String username;
         private String password;
         private int rol;
+        private int id;
 
     public String getPassword() {
         return password;
@@ -27,7 +28,14 @@ public class AddAction extends ActionSupport
     public void setRol(int rol) {
         this.rol = rol;
     }
-        
+      
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
  
     public String getUsername() {
 	return username;
@@ -44,7 +52,7 @@ public class AddAction extends ActionSupport
     public String execute() {
         System.out.println("Rol: " + rol);
          LoginBean lb = new LoginBean();
-        if(lb.addUser(username,password, rol)==1){
+        if(lb.modifyUser(username,password, rol, id)==1){
             return "exitoso";
         }else{
             return "error";
@@ -56,5 +64,3 @@ public class AddAction extends ActionSupport
 	}
         
     }
-
-

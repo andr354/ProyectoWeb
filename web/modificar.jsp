@@ -52,7 +52,7 @@
             out.println("</table>");
             out.println("</div>");
       %>
-        <s:form action="/Add">
+        <s:form action="/Mod">
             <s:textfield placeHolder="Nombre de usuario" name="username" label="Nombre de usuario"/><br>
             <input type="hidden" name="id" value=<%out.println(Id);%>/>
             <s:textfield placeHolder="Contraseña" name="password" label="Contraseña"/><br>

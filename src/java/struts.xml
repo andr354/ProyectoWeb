@@ -16,5 +16,9 @@
             <result name="exitoso">/success.jsp</result>
             <result name="error">/success.jsp</result>
 	</action>
+        <action name="Mod" class="paquete.ModAction">
+            <result name="exitoso">/success.jsp</result>
+            <result name="error">/success.jsp</result>
+        </action>
     </package>
 </struts>
