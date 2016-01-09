@@ -124,4 +124,64 @@ class LoginBean{
         }
         return status;
     }
+    
+    public int addData(String nombre, String apps, int grupo, int id){
+        int status = 0;
+        try {
+            con = DataSource.getInstance().getConnection();
+            String consulta = "insert into students(id_usu, nom_std, app_std, grp_std) values('"+id+"', '"+nombre+"', '"+apps+"', '"+grupo+"');";
+            pst = con.prepareStatement(consulta);
+            int cols = pst.executeUpdate(consulta);
+            status=1;
+        } catch (Exception e) {  
+            System.out.println(e);  
+        }
+        return status;
+    }
+    
+    public int Calif(int calif, String nota, int id){
+        int status = 0;
+        try {
+            con = DataSource.getInstance().getConnection();
+            //String consulta = "insert into diagramas(calif, notaP) values('"+calif+"', '"+nota+"') where id_dig='"+id+"';";
+            String consulta = "update diagramas\n" +
+                            "set calif='"+calif+"', notaP='"+nota+"'\n" +
+                            "where id_dig='"+id+"';";
+            pst = con.prepareStatement(consulta);
+            int cols = pst.executeUpdate(consulta);
+            status=1;
+        } catch (Exception e) {  
+            System.out.println(e);  
+        }
+        return status;
+    }
+    
+    public int Comment(String comment, int ide, int idd){
+        int status = 0;
+        try {
+            con = DataSource.getInstance().getConnection();
+            //String consulta = "insert into diagramas(calif, notaP) values('"+calif+"', '"+nota+"') where id_dig='"+id+"';";
+            String consulta = "insert into diagramas(Id_stdn, id_dgp, descripcion) values('"+ide+"', '"+idd+"', '"+comment+"');";
+            pst = con.prepareStatement(consulta);
+            int cols = pst.executeUpdate(consulta);
+            status=1;
+        } catch (Exception e) {  
+            System.out.println(e);  
+        }
+        return status;
+    }
+    
+    public int deleteD(int id){
+        int status = 0;
+        try {
+            con = DataSource.getInstance().getConnection();
+            String consulta = "DELETE FROM diagramasP WHERE id_dip='"+id+"';";
+            pst = con.prepareStatement(consulta);
+            int cols = pst.executeUpdate(consulta);
+            status=1;
+        } catch (Exception e) {  
+            System.out.println(e);  
+        }
+        return status;
+    }
 }

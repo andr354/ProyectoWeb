@@ -24,5 +24,21 @@
             <result name="exitoso">/success.jsp</result>
             <result name="error">/success.jsp</result>
         </action>
+        <action name="Std" class="paquete.stdAction">
+            <result name="exitoso">/success.jsp</result>
+            <result name="error">/success.jsp</result>
+        </action>
+        <action name="Cal" class="paquete.califAction">
+            <result name="exitoso">/professorIndex.jsp</result>
+            <result name="error">/professorIndex.jsp</result>
+        </action>
+        <action name="Com" class="paquete.commentAction">
+            <result name="exitoso">/studentIndex.jsp</result>
+            <result name="error">/studentIndex.jsp</result>
+        </action>
+        <action name="Deld" class="paquete.DelDAction">
+            <result name="exitoso">/professorIndex.jsp</result>
+            <result name="error">/professorIndex.jsp</result>
+        </action>
     </package>
 </struts>
