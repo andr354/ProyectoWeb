@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="css/joint.css" />
+    <link rel="stylesheet" href="css/umlmenustyle.css"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/lodash.min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/joint.js"></script>
+    <script src="js/menu.js"></script>
+</head>
+<body>
+    <div id="myholder" style="width: 700px; height: 600px; margin: 0px 0px; display: inline-block;"></div>
+  <div id="umlmenu">
+      <button class="debajo" id="addstate" onclick="btnaddstate()">Agregar estado</button>
+      <button class="debajo" id="addlink" onclick="btnaddlink()">Agregar lazo</button>
+      <div class="debajo"></div>
+      <button class="debajo" id="modstate" onclick="btnaddmodstate()">Modificar estado</button>
+      <button class="debajo" id="delstate" onclick="btndelstate()">Eliminar estado</button>
+      <div class="debajo" id="menuInputs">
+        <!--Agregar estado nuevo-->
+        <div id="addStateMenu" >
+            <label class="inline" for="statename">Nombre: </label>
+            <input class="inline" id="statename" name="nomestado"/>
+            <label class="inline" id="lblEventos" for="stateevents">Eventos: </label>
+            <input class="inline" id="stateevents" name="eventosestado"/>
+        </div>
+        <!--Agregar transicion nueva-->
+        <div id="addTranMenu">
+            <label class="inline" for="stateSource">Estado origen: </label>
+            <input class="inline" id="stateSource" name="nomstateSource"/>
+            <label class="inline" for="stateTarget">Estado destino: </label>
+            <input class="inline" id="stateTarget" name="nomstateTarget"/>
+            <div class="debajo"></div>
+            <label class="inline-block" for="linkLabel">Etiqueta: </label>
+            <input class="inline-block" id="linkLabel" name="linkLabelName"/>
+        </div>
+      </div>
+  </div>
+    
+  <script type="text/javascript">
+var graph = new joint.dia.Graph();
+
+var paper = new joint.dia.Paper({
+    el: $('#myholder'),
+    width: 800,
+    height: 600,
+    gridSize: 1,
+    model: graph
+});
+
+var uml = joint.shapes.uml;
+
+//var states = {
+    
+    var s0 = new uml.StartState({
+        position: { x:20  , y: 20 },
+        size: { width: 30, height: 30 },
+        name: "state 0",
+        attrs: {
+            'circle': {
+                fill: '#4b4a67',
+                stroke: 'none'
+            }
+        }
+    });
+
+    var s1 =  new uml.State({
+        position: { x:100  , y: 100 },
+        size: { width: 200, height: 180 },
+        name: "state 1",
+        events: ["entry / init()","exit / destroy()"],
+        attrs: {
+            '.uml-state-body': {
+                fill: 'rgba(48, 208, 198, 0.1)',
+                stroke: 'rgba(48, 208, 198,0.5)',
+                'stroke-width': 1.5
+            },
+            '.uml-state-separator': {
+                stroke: 'rgba(48, 208, 198, 0.1)'
+            }
+        }
+    });
+
+    var s2 = new uml.State({
+        position: { x:400  , y: 200 },
+        size: { width: 200, height: 180 },
+        name: "state 2",
+        events: ["entry / create()","exit / kill()","A / foo()","B / bar()"],
+        attrs: {
+            '.uml-state-body': {
+                fill: 'rgba(48, 208, 198, 0.1)',
+                stroke: 'rgba(48, 208, 198, 0.5)',
+                'stroke-width': 1.5
+            },
+            '.uml-state-separator': {
+                stroke: 'rgba(48, 208, 198, 0.4)'
+            }
+        }
+    });
+
+    var s3 = new uml.State({
+        position: { x:130  , y: 400 },
+        size: { width: 200, height: 180 },
+        name: "state 3",
+        events: ["entry / create()","exit / kill()"],
+        attrs: {
+            '.uml-state-body': {
+                fill: 'rgba(48, 208, 198, 0.1)',
+                stroke: 'rgba(48, 208, 198, 0.5)',
+                'stroke-width': 1.5
+            },
+            '.uml-state-separator': {
+                stroke: 'rgba(48, 208, 198, 0.4)'
+            }
+        }
+    });
+
+    var s4 = new uml.State({
+        position: { x:530  , y: 400 },
+        size: { width: 200, height: 180 },
+        name: "sub state 4",
+        events: ["entry / create()"],
+        attrs: {
+            '.uml-state-body': {
+                fill: 'rgba(48, 208, 198, 0.1)',
+                stroke: 'rgba(48, 208, 198, 0.5)',
+                'stroke-width': 1.5
+            },
+            '.uml-state-separator': {
+                stroke: 'rgba(48, 208, 198, 0.4)'
+            }
+        }
+    });
+
+    var se = new uml.EndState({
+        position: { x:750  , y: 550 },
+        size: { width: 30, height: 30 },
+        attrs: {
+            '.outer': {
+                stroke: "#4b4a67",
+                'stroke-width': 2
+            },
+            '.inner': {
+                fill: '#4b4a67'
+            }
+        }
+    });
+
+var states = [s0,s1,s2,s3,s4,se];
+var stateNames = [""] ;
+
+graph.addCells(states);
+
+states[2].embed(states[4]);
+
+var linkAttrs =  {
+    'fill': 'none',
+    'stroke-linejoin': 'round',
+    'stroke-width': '2',
+    'stroke': '#4b4a67'
+};
+
+ var elementPosition = g.point(states.s2.get('position'));
+
+var transitons = [
+    new uml.Transition({
+        source: { id: states.s0.id },
+        target: { id: states.s1.id },
+        attrs: {'.connection': linkAttrs },
+        labels: [
+        { position: 0.5, attrs: { text: { text: 'label' } } }
+    ]
+    }),
+    new uml.Transition({
+        source: { id: states.s1.id },
+        target: { id: states.s2.id },
+        attrs: {'.connection': linkAttrs }
+    }),
+    new uml.Transition({
+        source: { id: states.s1.id },
+        target: { id: states.s3.id },
+        attrs: {'.connection': linkAttrs }
+    }),
+    new uml.Transition({
+        source: { id: states.s3.id },
+        target: { id: states.s4.id },
+        attrs: {'.connection': linkAttrs }
+    }),
+    new uml.Transition({
+        source: { id: states.s2.id },
+        target: { id: states.se.id },
+        attrs: {'.connection': linkAttrs }
+    })
+];
+    graph.addCells(transitons);
+
+function getPos(){
+    var elementPosition = g.point(states.s2.get('position'));
+    //window.alert('x: '+elementPosition.x+', y: '+elementPosition.y);
+    var newTrans = new uml.Transition({
+        source: { id: states.s2.id },
+        target: { id: states.s2.id },
+        attrs: {'.connection': linkAttrs },
+        vertices: [{ x: elementPosition.x+50, y: elementPosition.y -50 }, 
+                    { x: elementPosition.x+150, y: elementPosition.y -50 }]
+        
+    });
+    transitons.push(newTrans);
+    graph.addCells(transitons);
+    
+}
+//agrega transicion al diagrama
+function addTrans(){
+    //var stName = states.s1.get('name');
+    var stSource = getState($("#stateSource").val());
+    var stTarget = getState($("#stateTarget").val());
+    var newTrans = new uml.Transition({
+        source: { id: stSource.id },
+        target: { id: stTarget.id },
+        attrs: {'.connection': linkAttrs },
+        labels: [
+        { position: 0.5, attrs: { text: { text: $("#linkLabel").val() } } } ]
+    });
+    transitons.push(newTrans);
+    graph.addCells(transitons);
+    //alert('Nombre de estado 1: '+st1.get('name')+'='+stName);
+}
+
+
+//agrega un estado al diagrama
+function addState(){
+    var nomEstado = $('#statename').val();
+    var nomEvento = $('#stateevents').val();
+    var newState = new uml.State({
+        position: { x:300  , y: 250 },
+        size: { width: 200, height: 180 },
+        name: nomEstado,
+        events: [nomEvento],
+        attrs: {
+            '.uml-state-body': {
+                fill: 'rgba(48, 208, 198, 0.1)',
+                stroke: 'rgba(48, 208, 198,0.5)',
+                'stroke-width': 1.5
+            },
+            '.uml-state-separator': {
+                stroke: 'rgba(48, 208, 198, 0.1)'
+            }
+        }
+    });
+    states.push(-1,0,newState);
+    graph.addCell(newState);
+}
+
+//elimina un estado del diagrama
+//function delState(){
+//    
+//}
+
+function getState(stName){
+    for (var st in states) {
+        // skip loop if the property is from prototype
+        if (!states.hasOwnProperty(st)) continue;
+
+        var obj = states[st];
+        var statename = obj.get('name');
+        if (statename == stName) {
+            console.log('Objeto encontrado');
+            return obj;
+        }
+        console.log(statename);
+////        for (var prop in obj) {
+//            // skip loop if the property is from prototype
+//            if(!obj.hasOwnProperty(prop)) continue;
+//
+//            if (prop == "attributes") {
+//                var atributes = obj[prop];
+//                for (var att in atributes) {
+//                    if(!atributes.hasOwnProperty(att)) continue;
+//                    if (att == "name") {
+//                            //console.log(att + " = " + atributes[att]);
+//                            if (atributes[att] == stName) {
+//                                //console.log("Objeto encontrado !");
+//                            }
+//                    }
+//                }
+//            }
+//            
+//        }
+//    }
+    }
+    return null;
+}
+  </script>
+</body>
+</html>
